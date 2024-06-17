@@ -11,6 +11,7 @@ public class RestAdviser {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e) {
+        e.printStackTrace();
         return ResponseEntity.internalServerError().body(
                 ErrorResponse.builder()
                         .exception(e.getClass().getSimpleName())

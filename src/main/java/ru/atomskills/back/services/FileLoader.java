@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
@@ -105,8 +106,8 @@ public class FileLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     @SneakyThrows
     private void processLesson(Path path) {
-        Path task = path.resolve(path.getFileName().toString() + ".json");
-        Lesson entity = objectMapper.readValue(task.toFile(), Lesson.class);
+        Path lesson = path.resolve(path.getFileName().toString() + ".json");
+        Lesson entity = objectMapper.readValue(lesson.toFile(), Lesson.class);
         entity.getSupplement().forEach(supplement -> supplement.setLesson(entity));
         lessonsRepository.save(entity);
     }
@@ -114,8 +115,14 @@ public class FileLoader implements ApplicationListener<ContextRefreshedEvent> {
     @SneakyThrows
     private void processTopic(Path path) {
         Topic entity = objectMapper.readValue(path.toFile(), Topic.class);
-        entity.setLessons(lessonsRepository.findAllById(entity.getLessons().stream().map(Lesson::getCode).toList()));
-        entity.getLessons().forEach(lesson -> lesson.setTopic(entity));
+//        entity.setLessons(lessonsRepository.findAllById(entity.getLessons().stream().map(Lesson::getCode).toList()));
+//        entity.getLessons().forEach(lesson -> {
+//            if (lesson.getTopics() == null) {
+//                lesson.setTopics(List.of(entity));
+//            } else {
+//                lesson.getTopics().add(entity);
+//            }
+//        });
         topicsRepository.save(entity);
     }
 }

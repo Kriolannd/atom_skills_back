@@ -48,8 +48,8 @@ public class Lesson {
 
     private String author;
 
-    @ManyToOne
-    private Topic topic;
+    @ManyToMany(mappedBy = "lessons")
+    private List<Topic> topics;
 
     @Entity
     @Getter

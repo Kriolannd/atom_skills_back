@@ -28,7 +28,7 @@ public class Topic {
 
     private String title;
 
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    @ManyToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Lesson> lessons;
 

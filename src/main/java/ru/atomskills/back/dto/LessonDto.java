@@ -21,7 +21,7 @@ public class LessonDto {
     private List<Lesson.Supplement> supplement;
     private List<TaskShortDto> tasks;
     private String author;
-    private Topic topic;
+    private List<Topic> topics;
 
     public static LessonDto fromEntity(Lesson lesson) {
         return LessonDto.builder()
@@ -32,7 +32,7 @@ public class LessonDto {
                 .supplement(lesson.getSupplement())
                 .tasks(lesson.getTasks().stream().map(TaskShortDto::fromEntity).toList())
                 .author(lesson.getAuthor())
-                .topic(lesson.getTopic())
+                .topics(lesson.getTopics())
                 .build();
     }
 }
