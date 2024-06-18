@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private static final Long EXPIRATION_TIME = TimeUnit.HOURS.toMillis(1);
+    private static final Long EXPIRATION_TIME = TimeUnit.HOURS.toMillis(12);
     private static final Long REFRESH_EXPIRATION_TIME = TimeUnit.DAYS.toMillis(1);
 
     private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);

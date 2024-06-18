@@ -100,7 +100,11 @@ public class FileLoader implements ApplicationListener<ContextRefreshedEvent> {
     private void processTask(Path path) {
         Path task = path.resolve(path.getFileName().toString() + ".json");
         Task entity = objectMapper.readValue(task.toFile(), Task.class);
-        entity.getSupplement().forEach(supplement -> supplement.setTask(entity));
+        entity.getSupplement().forEach(supplement -> {
+            supplement.setTask(entity);
+            entity.setContent(entity.getContent().replace(supplement.getFile(), "/static/" + entity.getCode() + "/" + supplement.getFile()));
+        });
+
         tasksRepository.save(entity);
     }
 
