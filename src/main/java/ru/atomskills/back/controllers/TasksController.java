@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.atomskills.back.dto.TaskDto;
+import ru.atomskills.back.dto.TaskProgressDto;
 import ru.atomskills.back.dto.TaskShortDto;
 import ru.atomskills.back.services.TasksService;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -34,15 +34,21 @@ public class TasksController {
         return TaskDto.fromEntity(tasksService.getOne(code));
     }
 
+    @GetMapping("/{code}/status")
+    public TaskProgressDto getStatus(@PathVariable String code) {
+        return TaskProgressDto.fromEntity(tasksService.getStatus(code));
+    }
+
     @PostMapping("/{code}/start")
     public void startTask(@PathVariable String code) {
         tasksService.startTask(code);
     }
 
     @PostMapping(value = "/{code}/submit", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public void submitTask(@RequestPart("files") MultipartFile[] files,
+    public void submitTask(@PathVariable String code,
+                           @RequestPart("files") MultipartFile[] files,
                            @RequestParam("comments") String[] comments) {
-        System.out.println(Arrays.toString(comments));
+        tasksService.submitTask(code, List.of(files), List.of(comments));
     }
 
 }

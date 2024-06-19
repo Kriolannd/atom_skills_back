@@ -36,6 +36,8 @@ public class TaskProgress {
 
     private Status status;
 
+    private Long startTime;
+
     public enum Status {
         IN_PROGRESS, ON_REVIEW, REVIEWED
     }
